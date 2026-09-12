@@ -15,7 +15,9 @@ export class TransactionsPage {
   async open() {
     await this.page.goto('/angularJs-protractor/BankingProject/#/listTx');
   }
+
   async reload() {
+    // Corrigido para chamar o reload nativo do Playwright sem loop infinito
     await this.page.reload();
   }
 
@@ -47,3 +49,4 @@ export class TransactionsPage {
     await expect(this.headerThirdCell).toContainText(text);
   }
 }
+
