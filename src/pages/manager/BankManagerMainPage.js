@@ -1,4 +1,6 @@
-export class BankManagerMainPage {
+import { expect } from '@playwright/test';
+
+export default class BankManagerMainPage {
   constructor(page) {
     this.page = page;
     this.addCustomerTab = page.locator('button:has-text("Add Customer")');
@@ -18,3 +20,7 @@ export class BankManagerMainPage {
     await this.customersTab.click();
   }
 }
+
+
+
+

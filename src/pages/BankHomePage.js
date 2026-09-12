@@ -9,7 +9,7 @@ export class BankHomePage {
   }
 
   async open() {
-    await this.page.goto('https://globalsqa.com');
+    await this.page.goto('/angularJs-protractor/BankingProject/');
   }
 
   async clickBankManagerLogin() {
@@ -24,4 +24,5 @@ export class BankHomePage {
     await this.homeButton.click();
   }
 }
+
 
