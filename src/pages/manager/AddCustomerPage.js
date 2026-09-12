@@ -10,7 +10,6 @@ export class AddCustomerPage {
   }
 
   async open() {
-    // CORREÇÃO: Utilizando o caminho relativo correto exigido pelo mentor
     await this.page.goto('/angularJs-protractor/BankingProject/#/manager/addCust');
   }
 
@@ -21,7 +20,8 @@ export class AddCustomerPage {
   }
 
   async submitForm() {
-    this.page.on('dialog', async (dialog) => {
+    // CORREÇÃO: Mudado de .on para .once para ouvir apenas este alerta específico
+    this.page.once('dialog', async (dialog) => {
       expect(dialog.message()).toContain('Customer added successfully');
       await dialog.accept();
     });
@@ -29,6 +29,7 @@ export class AddCustomerPage {
     await this.submitButton.click();
   }
 }
+
 
 
 
