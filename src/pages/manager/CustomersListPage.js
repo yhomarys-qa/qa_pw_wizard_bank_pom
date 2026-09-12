@@ -3,6 +3,7 @@ import { expect } from '@playwright/test';
 export class CustomersListPage {
   constructor(page) {
     this.page = page;
+    // Preenchendo os seletores necessários para as suas funções funcionarem
     this.searchInput = page.locator('input[placeholder="Search Customer"]');
     this.tableRows = page.locator('table tbody tr');
   }
@@ -26,4 +27,5 @@ export class CustomersListPage {
     await expect(row).not.toBeVisible();
   }
 }
+
 
