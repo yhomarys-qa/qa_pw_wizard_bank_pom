@@ -10,7 +10,8 @@ export class AddCustomerPage {
   }
 
   async open() {
-    await this.page.goto('https://globalsqa.com');
+    // CORREÇÃO: Utilizando o caminho relativo correto exigido pelo mentor
+    await this.page.goto('/angularJs-protractor/BankingProject/#/manager/addCust');
   }
 
   async fillForm(firstName, lastName, postCode) {
@@ -20,16 +21,15 @@ export class AddCustomerPage {
   }
 
   async submitForm() {
-    // EXIGÊNCIA DO MENTOR: Registra o ouvinte do alerta ANTES de clicar no botão
     this.page.on('dialog', async (dialog) => {
       expect(dialog.message()).toContain('Customer added successfully');
       await dialog.accept();
     });
 
-    // Executa o clique que dispara o alerta
     await this.submitButton.click();
   }
 }
+
 
 
 
