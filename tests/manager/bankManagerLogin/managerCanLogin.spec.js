@@ -1,23 +1,25 @@
 import { test, expect } from '@playwright/test';
 import { BankHomePage } from '../../../src/pages/BankHomePage.js';
+import { CustomerLoginPage } from '../../../src/pages/customer/CustomerLoginPage.js';
 
-test('Assert manager can login successfully and see options menu', async ({ page }) => {
+test('Assert correct customer Logout', async ({ page }) => {
   const bankHomePage = new BankHomePage(page);
+  const customerLoginPage = new CustomerLoginPage(page);
 
-  // 1. Abre a página inicial do banco
-  await bankHomePage.open(); 
+  await bankHomePage.open();
+  await bankHomePage.clickCustomerLogin();
 
-  // 2. Clica no botão para efetuar o login como Gerente
-  await bankHomePage.clickBankManagerLogin();
+  await customerLoginPage.selectCustomer('Hermoine Granger');
+  await customerLoginPage.clickLoginButton();
 
-  // 3. EXIGÊNCIA DO MENTOR: Verifica se os botões de menu do gerente aparecem após o login
-  const addCustomerTab = page.locator('button:has-text("Add Customer")');
-  const openAccountTab = page.locator('button:has-text("Open Account")');
-  const customersTab = page.locator('button:has-text("Customers")');
+  const logoutButton = page.locator('button:has-text("Logout")');
+  await logoutButton.waitFor({ state: 'visible' });
+  await logoutButton.click();
 
-  await expect(addCustomerTab).toBeVisible();
-  await expect(openAccountTab).toBeVisible();
-  await expect(customersTab).toBeVisible();
+  // EXIGÊNCIA DO MENTOR: Valida visibilidade E que o valor resetou para vazio ("")
+  await customerLoginPage.assertSelectCustomerDropDownIsVisible();
+  await customerLoginPage.assertSelectCustomerDropDownContainsValue('');
 });
+
 
 

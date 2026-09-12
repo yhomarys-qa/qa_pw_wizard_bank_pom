@@ -14,11 +14,12 @@ test('Assert manager can search customer by postal code', async ({ page }) => {
   await bankHomePage.clickBankManagerLogin();
   await managerMainPage.clickCustomersTab();
 
-  // Busca pelo código postal na tabela
   await customersListPage.searchCustomer(searchPostalCode);
-
-  // Valida que o cliente correspondente continua visível
   await customersListPage.assertCustomerInList(searchPostalCode);
+  
+  // DICA DO MENTOR: Valida que somente o resultado procurado aparece na tabela
+  await expect(customersListPage.tableRows).toHaveCount(1);
 });
+
 
 

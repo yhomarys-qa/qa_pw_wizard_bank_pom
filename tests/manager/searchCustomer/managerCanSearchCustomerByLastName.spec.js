@@ -14,11 +14,11 @@ test('Assert manager can search customer by last name', async ({ page }) => {
   await bankHomePage.clickBankManagerLogin();
   await managerMainPage.clickCustomersTab();
 
-  // Busca pelo sobrenome na tabela
   await customersListPage.searchCustomer(searchLastName);
-
-  // Valida que o cliente correspondente continua visível
   await customersListPage.assertCustomerInList(searchLastName);
+  
+  // DICA DO MENTOR: Valida que somente o resultado procurado aparece na tabela
+  await expect(customersListPage.tableRows).toHaveCount(1);
 });
 
 
