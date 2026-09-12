@@ -9,6 +9,10 @@ export class AddCustomerPage {
     this.submitButton = page.locator('button[type="submit"]:has-text("Add Customer")');
   }
 
+  async open() {
+    await this.page.goto('https://globalsqa.com');
+  }
+
   async fillForm(firstName, lastName, postCode) {
     await this.firstNameInput.fill(firstName);
     await this.lastNameInput.fill(lastName);
@@ -16,12 +20,16 @@ export class AddCustomerPage {
   }
 
   async submitForm() {
-    // Escuta o alerta do navegador de que o cliente foi adicionado com sucesso
-    this.page.once('dialog', async (dialog) => {
+    // EXIGÊNCIA DO MENTOR: Registra o ouvinte do alerta ANTES de clicar no botão
+    this.page.on('dialog', async (dialog) => {
       expect(dialog.message()).toContain('Customer added successfully');
       await dialog.accept();
     });
+
+    // Executa o clique que dispara o alerta
     await this.submitButton.click();
   }
 }
+
+
 

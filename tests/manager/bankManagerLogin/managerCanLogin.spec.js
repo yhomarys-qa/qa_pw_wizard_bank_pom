@@ -1,26 +1,23 @@
 import { test, expect } from '@playwright/test';
 import { BankHomePage } from '../../../src/pages/BankHomePage.js';
-import { CustomerLoginPage } from '../../../src/pages/customer/CustomerLoginPage.js';
 
-test('Assert correct customer Logout', async ({ page }) => {
-  // Instanciando as telas necessárias
+test('Assert manager can login successfully and see options menu', async ({ page }) => {
   const bankHomePage = new BankHomePage(page);
-  const customerLoginPage = new CustomerLoginPage(page);
 
-  // 1. Abre a página do banco e clica em "Customer Login"
-  await bankHomePage.open();
-  await bankHomePage.clickCustomerLogin();
+  // 1. Abre a página inicial do banco
+  await bankHomePage.open(); 
 
-  // 2. Seleciona o cliente e clica no botão de Login
-  await customerLoginPage.selectCustomer('Hermoine Granger');
-  await customerLoginPage.clickLoginButton();
+  // 2. Clica no botão para efetuar o login como Gerente
+  await bankHomePage.clickBankManagerLogin();
 
-  // 3. Aguarda o botão de Logout aparecer no topo e clica nele
-  const logoutButton = page.locator('button:has-text("Logout")');
-  await logoutButton.waitFor({ state: 'visible' });
-  await logoutButton.click();
+  // 3. EXIGÊNCIA DO MENTOR: Verifica se os botões de menu do gerente aparecem após o login
+  const addCustomerTab = page.locator('button:has-text("Add Customer")');
+  const openAccountTab = page.locator('button:has-text("Open Account")');
+  const customersTab = page.locator('button:has-text("Customers")');
 
-  // 4. Valida que o dropdown de seleção voltou a ficar visível na tela
-  await customerLoginPage.assertSelectCustomerDropDownIsVisible();
+  await expect(addCustomerTab).toBeVisible();
+  await expect(openAccountTab).toBeVisible();
+  await expect(customersTab).toBeVisible();
 });
+
 
