@@ -12,25 +12,25 @@ export class CustomerLoginPage {
   }
 
   async waitForOpened() {
-    await this.page.waitForURL(
-      '/angularJs-protractor/BankingProject/#/customer',
-    );
+    await this.page.waitForURL('/angularJs-protractor/BankingProject/#/customer');
   }
 
   async selectCustomer(customerName) {
-    await this.customerDropDown.selectOption(customerName);
+    await this.customerDropDown.selectOption({ label: customerName });
   }
 
   async clickLoginButton() {
     await this.loginButton.click();
   }
 
-  async assertSelectCustomerDropdownIsVisible() {
+  async assertSelectCustomerDropDownIsVisible() {
     await expect(this.customerDropDown).toBeVisible();
   }
 
-  async assertSelectCustomerDropdownContainsValue(value) {
+  async assertSelectCustomerDropDownContainsValue(value) {
     const currentOptionText = this.customerDropDown;
     await expect(currentOptionText).toHaveValue(value);
   }
 }
+
+
