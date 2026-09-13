@@ -26,7 +26,7 @@ test('Assert the deposit can be opened', async ({ page }) => {
 
   await bankHomePage.clickCustomerLogin();
 
-  await customerLoginPage.selectCustomer('Hermoine Granger');
+  await customerLoginPage.selectCustomer('Hermione Granger');
 
   await customerLoginPage.clickLoginButton();
 

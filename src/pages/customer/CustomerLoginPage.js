@@ -8,11 +8,11 @@ export class CustomerLoginPage {
   }
 
   async open() {
-    await this.page.goto('/angularjs-protractor/BankingProject/#/customer');
+    // Corrigido para angularJs (J maiúsculo) conforme solicitado pelo mentor
+    await this.page.goto('/angularJs-protractor/BankingProject/#/customer');
   }
 
   async selectCustomer(customerName) {
-    // Mantendo a seleção compatível com os valores e textos nativos do HTML
     await this.customerDropDown.selectOption(customerName);
   }
 
@@ -28,6 +28,7 @@ export class CustomerLoginPage {
     await expect(this.customerDropDown).toHaveValue(value);
   }
 }
+
 
 
 

@@ -9,11 +9,11 @@ export class OpenAccountPage {
   }
 
   async open() {
-    await this.page.goto('/angularjs-protractor/BankingProject/#/manager/openAccount');
+    // Corrigido para angularJs (J maiúsculo) conforme solicitado pelo mentor
+    await this.page.goto('/angularJs-protractor/BankingProject/#/manager/openAccount');
   }
 
   async selectCustomer(customerName) {
-    // Corrigido para passar o valor de forma direta (consistente com o valor nativo do HTML)
     await this.customerSelect.selectOption(customerName);
   }
 

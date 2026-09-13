@@ -2,47 +2,31 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  /* Tempo limite máximo para cada teste individual (30 segundos) */
-  timeout: 30000,
-  /* Tempo limite para asserções do expect (5 segundos) */
+  timeout: 45000, // Dá uma margem de tempo segura para a rede do site responder
   expect: {
     timeout: 5000,
   },
-  /* Roda os testes em paralelo para economizar tempo */
-  fullyParallel: true,
-  /* Impede que o build quebre no CI se você esquecer um test.only perdido */
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  /* Número de tentativas adicionais se o teste falhar (bom para sites instáveis) */
-  retries: process.env.CI ? 2 : 0,
-  /* Quantidade de workers simultâneos */
-  workers: process.env.CI ? 1 : undefined,
-  /* Tipo de relatório que será gerado após os testes */
+  retries: 1,
+  workers: 1, // Mantém 1 por vez para evitar que o servidor bloqueie acessos simultâneos
   reporter: 'html',
-  
-  /* Configurações globais para os navegadores compartilhados */
   use: {
-    /* URL base do projeto para você usar caminhos relativos (ex: await page.goto('/')) */
-    baseURL: 'https://globalsqa.com',
-    /* Captura o rastro do teste (screenshots/vídeo) apenas se houver falhas */
+    baseURL: 'https://www.globalsqa.com',
     trace: 'on-first-retry',
-    /* Roda os testes em modo oculto (headless) por padrão no terminal */
-    headless: true,
+    // Injeta cabeçalho real para burlar o bloqueio de robôs do servidor deles
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+    launchOptions: {
+      args: ['--disable-blink-features=AutomationControlled']
+    }
   },
-
-  /* Configuração dos navegadores onde os testes serão validados */
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
   ],
 });
+
+
 

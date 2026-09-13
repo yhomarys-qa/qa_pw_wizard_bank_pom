@@ -9,7 +9,13 @@ export class BankHomePage {
   }
 
   async open() {
-    await this.page.goto('/angularJs-protractor/BankingProject/');
+    // Acessa a rota correta do AngularJS e tolera oscilações iniciais do carregamento
+    await this.page.goto('/angularJs-protractor/BankingProject/#/login', { 
+      waitUntil: 'commit', 
+      timeout: 35000 
+    });
+    // Aguarda o botão principal carregar fisicamente na tela antes de qualquer clique
+    await this.customerLoginButton.waitFor({ state: 'visible', timeout: 10000 });
   }
 
   async clickBankManagerLogin() {
@@ -24,5 +30,7 @@ export class BankHomePage {
     await this.homeButton.click();
   }
 }
+
+
 
 
