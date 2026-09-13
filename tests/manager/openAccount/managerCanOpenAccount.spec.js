@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { BankHomePage } from '../../../src/pages/BankHomePage.js';
-import BankManagerMainPage from '../../../src/pages/manager/BankManagerMainPage.js';
+// CORREÇÃO DE CONSISTÊNCIA: Adicionadas chaves { } na importação
+import { BankManagerMainPage } from '../../../src/pages/manager/BankManagerMainPage.js';
 import { OpenAccountPage } from '../../../src/pages/manager/OpenAccountPage.js';
 
 test('Assert manager can open account', async ({ page }) => {
-  // Instanciando os Page Objects
   const bankHomePage = new BankHomePage(page);
   const managerMainPage = new BankManagerMainPage(page);
   const openAccountPage = new OpenAccountPage(page);
@@ -18,7 +18,7 @@ test('Assert manager can open account', async ({ page }) => {
   // 3. Clica na aba "Open Account" no menu do gerente
   await managerMainPage.clickOpenAccountTab();
 
-  // 4. Seleciona o cliente usando a sua função (Nota: usamos um cliente que já existe por padrão no banco para o teste passar isolado)
+  // 4. Seleciona o cliente usando a sua função
   await openAccountPage.selectCustomer('Hermoine Granger');
 
   // 5. Seleciona a moeda usando a sua função

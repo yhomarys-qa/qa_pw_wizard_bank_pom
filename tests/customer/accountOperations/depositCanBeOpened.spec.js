@@ -1,41 +1,68 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-import { CustomerLoginPage } from '../../../src/pages/customer/CustomerLoginPage';
-import { CustomerAccountPage } from '../../../src/pages/customer/CustomerAccountPage';
-import { TransactionsPage } from '../../../src/pages/customer/TransactionsPage';
+
+import { BankHomePage } from '../../../src/pages/BankHomePage.js';
+
+import { CustomerLoginPage } from '../../../src/pages/customer/CustomerLoginPage.js';
+
+import { CustomerAccountPage } from '../../../src/pages/customer/CustomerAccountPage.js';
+
+import { TransactionsPage } from '../../../src/pages/customer/TransactionsPage.js';
+
 
 test('Assert the deposit can be opened', async ({ page }) => {
-  /* 
-  Test:
-  1. Open Wizard bank login for Customer
-  2. Select "Harry Potter"
-  3. Click [Login]
-  4. Click [Deposit]
-  5. Fill deposit value
-  6. Click [Deposit]
-  7. Assert 'Deposit Successful' message is visible
-  8. Assert Balance
-  9. Click [Transactions]
-  10. Assert Deposit transaction
-  */
+
+  const bankHomePage = new BankHomePage(page);
 
   const customerLoginPage = new CustomerLoginPage(page);
+
   const accountPage = new CustomerAccountPage(page);
+
   const transactionsPage = new TransactionsPage(page);
 
-  await customerLoginPage.open();
-  await customerLoginPage.selectCustomer('Harry Potter');
+  const depositAmount = '100';
+
+
+  await bankHomePage.open();
+
+  await bankHomePage.clickCustomerLogin();
+
+  await customerLoginPage.selectCustomer('Hermoine Granger');
+
   await customerLoginPage.clickLoginButton();
+
+
+  // Executa o depósito na conta
+
   await accountPage.clickDepositButton();
 
-  const amount = faker.number.int(100).toString();
+  await accountPage.fillAmountInputField(depositAmount);
 
-  await accountPage.fillAmountInputField(amount);
   await accountPage.clickDepositFormButton();
+
   await accountPage.assertDepositSuccessfulMessageIsVisible();
+
+
+  // Navega até as transações
+
   await accountPage.clickTransactionsButton();
+
+
+  // Valida o cabeçalho
+
   await transactionsPage.assertHeaderIsVisible();
-  await transactionsPage.reload();
-  await transactionsPage.assertFirstRowAmountContainsText(amount);
+
+
+  // Valida o valor do depósito
+
+  await transactionsPage.assertFirstRowAmountContainsText(depositAmount);
+
+
+  // Valida o tipo da transação
+
   await transactionsPage.assertFirstRowTypeContainsText('Credit');
+
 });
+
+
+
+

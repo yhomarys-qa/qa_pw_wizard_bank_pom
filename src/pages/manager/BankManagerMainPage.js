@@ -1,11 +1,12 @@
 import { expect } from '@playwright/test';
 
-export default class BankManagerMainPage {
+export class BankManagerMainPage {
   constructor(page) {
     this.page = page;
-    this.addCustomerTab = page.locator('button:has-text("Add Customer")');
-    this.openAccountTab = page.locator('button:has-text("Open Account")');
-    this.customersTab = page.locator('button:has-text("Customers")');
+    // Seletores focados nos botões do menu superior
+    this.addCustomerTab = page.locator('button.tab:has-text("Add Customer")');
+    this.openAccountTab = page.locator('button.tab:has-text("Open Account")');
+    this.customersTab = page.locator('button.tab:has-text("Customers")');
   }
 
   async clickAddCustomerTab() {
@@ -20,6 +21,10 @@ export default class BankManagerMainPage {
     await this.customersTab.click();
   }
 }
+
+
+
+
 
 
 

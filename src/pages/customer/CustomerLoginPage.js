@@ -3,20 +3,17 @@ import { expect } from '@playwright/test';
 export class CustomerLoginPage {
   constructor(page) {
     this.page = page;
-    this.customerDropDown = page.getByTestId('userSelect');
+    this.customerDropDown = page.locator('#userSelect');
     this.loginButton = page.getByRole('button', { name: 'Login' });
   }
 
   async open() {
-    await this.page.goto('/angularJs-protractor/BankingProject/#/customer');
-  }
-
-  async waitForOpened() {
-    await this.page.waitForURL('/angularJs-protractor/BankingProject/#/customer');
+    await this.page.goto('/angularjs-protractor/BankingProject/#/customer');
   }
 
   async selectCustomer(customerName) {
-    await this.customerDropDown.selectOption({ label: customerName });
+    // Mantendo a seleção compatível com os valores e textos nativos do HTML
+    await this.customerDropDown.selectOption(customerName);
   }
 
   async clickLoginButton() {
@@ -28,9 +25,12 @@ export class CustomerLoginPage {
   }
 
   async assertSelectCustomerDropDownContainsValue(value) {
-    const currentOptionText = this.customerDropDown;
-    await expect(currentOptionText).toHaveValue(value);
+    await expect(this.customerDropDown).toHaveValue(value);
   }
 }
+
+
+
+
 
 

@@ -1,14 +1,23 @@
 import { expect } from '@playwright/test';
 
 export class TransactionsPage {
+
   constructor(page) {
+
     this.page = page;
+
     this.tableHeader = page.getByRole('row').first();
+
     this.headerFirstCell = this.tableHeader.getByRole('cell').nth(0);
+
     this.headerSecondCell = this.tableHeader.getByRole('cell').nth(1);
+
     this.headerThirdCell = this.tableHeader.getByRole('cell').nth(2);
+
     this.firstRow = page.getByRole('row').nth(1);
+
     this.firstRowAmountCell = this.firstRow.getByRole('cell').nth(1);
+
     this.firstRowTypeCell = this.firstRow.getByRole('cell').nth(2);
   }
 
@@ -17,7 +26,6 @@ export class TransactionsPage {
   }
 
   async reload() {
-    // Corrigido para chamar o reload nativo do Playwright sem loop infinito
     await this.page.reload();
   }
 
@@ -49,4 +57,3 @@ export class TransactionsPage {
     await expect(this.headerThirdCell).toContainText(text);
   }
 }
-

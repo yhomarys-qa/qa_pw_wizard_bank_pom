@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker'; // EXIGÊNCIA DA TASK: Importa o Faker para dados aleatórios
+import { faker } from '@faker-js/faker'; 
 import { BankHomePage } from '../../../src/pages/BankHomePage.js';
-import BankManagerMainPage from '../../../src/pages/manager/BankManagerMainPage.js';
+// CORREÇÃO DE CONSISTÊNCIA: Adicionadas chaves { } na importação
+import { BankManagerMainPage } from '../../../src/pages/manager/BankManagerMainPage.js';
 import { AddCustomerPage } from '../../../src/pages/manager/AddCustomerPage.js';
 import { CustomersListPage } from '../../../src/pages/manager/CustomersListPage.js';
 
@@ -11,7 +12,6 @@ test('Assert manager can add new customer and verify in list', async ({ page }) 
   const addCustomerPage = new AddCustomerPage(page);
   const customersListPage = new CustomersListPage(page);
 
-  // Geração de dados aleatórios e dinâmicos usando o Faker
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const postCode = faker.location.zipCode();
@@ -20,7 +20,8 @@ test('Assert manager can add new customer and verify in list', async ({ page }) 
   await bankHomePage.open(); 
   await bankHomePage.clickBankManagerLogin();
 
-  // 2. Vai para a aba de cadastro e adiciona o cliente dinâmico
+  // 2. Garante o carregamento abrindo explicitamente a página do formulário
+  await addCustomerPage.open();
   await managerMainPage.clickAddCustomerTab();
   await addCustomerPage.fillForm(firstName, lastName, postCode);
   await addCustomerPage.submitForm();
@@ -30,6 +31,7 @@ test('Assert manager can add new customer and verify in list', async ({ page }) 
   await customersListPage.searchCustomer(firstName);
   await customersListPage.assertCustomerInList(firstName);
 });
+
 
 
 

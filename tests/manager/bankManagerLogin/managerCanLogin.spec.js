@@ -1,24 +1,20 @@
 import { test, expect } from '@playwright/test';
 import { BankHomePage } from '../../../src/pages/BankHomePage.js';
-import { CustomerLoginPage } from '../../../src/pages/customer/CustomerLoginPage.js';
 
-test('Assert correct customer Logout', async ({ page }) => {
+test('Assert manager can login successfully and see options menu', async ({ page }) => {
   const bankHomePage = new BankHomePage(page);
-  const customerLoginPage = new CustomerLoginPage(page);
 
   await bankHomePage.open();
-  await bankHomePage.clickCustomerLogin();
+  await bankHomePage.clickBankManagerLogin();
 
-  await customerLoginPage.selectCustomer('Hermoine Granger');
-  await customerLoginPage.clickLoginButton();
+  // Validando o fluxo correto do gerente
+  const addCustomerTab = page.locator('button:has-text("Add Customer")');
+  const openAccountTab = page.locator('button:has-text("Open Account")');
+  const customersTab = page.locator('button:has-text("Customers")');
 
-  const logoutButton = page.locator('button:has-text("Logout")');
-  await logoutButton.waitFor({ state: 'visible' });
-  await logoutButton.click();
-
-  // EXIGÊNCIA DO MENTOR: Valida visibilidade E que o valor resetou para vazio ("")
-  await customerLoginPage.assertSelectCustomerDropDownIsVisible();
-  await customerLoginPage.assertSelectCustomerDropDownContainsValue('');
+  await expect(addCustomerTab).toBeVisible();
+  await expect(openAccountTab).toBeVisible();
+  await expect(customersTab).toBeVisible();
 });
 
 

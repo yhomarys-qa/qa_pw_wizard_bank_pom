@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { BankHomePage } from '../../../src/pages/BankHomePage.js';
-import BankManagerMainPage from '../../../src/pages/manager/BankManagerMainPage.js';
+// CORREÇÃO DE CONSISTÊNCIA: Adicionadas chaves { } na importação
+import { BankManagerMainPage } from '../../../src/pages/manager/BankManagerMainPage.js';
 import { OpenAccountPage } from '../../../src/pages/manager/OpenAccountPage.js';
 
 test('Assert manager can choose currencies', async ({ page }) => {
