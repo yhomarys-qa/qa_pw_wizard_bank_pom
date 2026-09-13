@@ -9,11 +9,12 @@ export class OpenAccountPage {
   }
 
   async open() {
-    await this.page.goto('/angularJs-protractor/BankingProject/#/manager/openAccount');
+    await this.page.goto('/angularjs-protractor/BankingProject/#/manager/openAccount');
   }
 
   async selectCustomer(customerName) {
-    await this.customerSelect.selectOption({ label: customerName });
+    // Corrigido para passar o valor de forma direta (consistente com o valor nativo do HTML)
+    await this.customerSelect.selectOption(customerName);
   }
 
   async selectCurrency(currency) {
@@ -21,13 +22,12 @@ export class OpenAccountPage {
   }
 
   async processAccount() {
-    // CORREÇÃO: Registra o escutador com .once ANTES do clique para não prender a memória
     this.page.once('dialog', async (dialog) => {
       expect(dialog.message()).toContain('Account created successfully');
       await dialog.accept();
     });
-
     await this.processButton.click();
   }
 }
+
 

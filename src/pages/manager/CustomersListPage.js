@@ -3,13 +3,12 @@ import { expect } from '@playwright/test';
 export class CustomersListPage {
   constructor(page) {
     this.page = page;
-    // Preenchendo os seletores necessários para as suas funções funcionarem
-    this.searchInput = page.locator('input[placeholder="Search Customer"]');
+    this.searchTextInput = page.locator('input[placeholder="Search Customer"]');
     this.tableRows = page.locator('table tbody tr');
   }
 
   async searchCustomer(text) {
-    await this.searchInput.fill(text);
+    await this.searchTextInput.fill(text);
   }
 
   async deleteCustomer(customerName) {
@@ -23,9 +22,11 @@ export class CustomersListPage {
   }
 
   async assertCustomerNotInList(customerName) {
-    const row = this.tableRows.filter({ hasText: customerName });
-    await expect(row).not.toBeVisible();
+    // Corrigido para validar que a linha sumiu da contagem da tabela, evitando falsos positivos
+    await expect(this.tableRows.filter({ hasText: customerName })).toHaveCount(0);
   }
 }
+
+
 
 
